@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="12">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="8">
  <tileset firstgid="1" source="tilesetOpenGame_-_Editada (1).tsx"/>
  <layer id="1" name="Capa de patrones 1" width="30" height="20">
   <data encoding="csv">
@@ -25,29 +25,6 @@
 54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54
 </data>
  </layer>
-
- <objectgroup id="3" name="enemigos">
-  <object id="6" x="365.925" y="475.312">
-   <point/>
-  </object>
-  <object id="7" x="813.89" y="220.076">
-   <point/>
-  </object>
-  <object id="8" x="906.348" y="438.85">
-   <point/>
-  </object>
- </objectgroup>
- <objectgroup id="4" name="monedas">
-  <object id="9" x="111.991" y="472.708">
-   <point/>
-  </object>
-  <object id="10" x="720.13" y="217.472">
-   <point/>
-  </object>
-  <object id="11" x="563.863" y="408.899">
-   <point/>
-  </object>
- </objectgroup>
  <objectgroup id="2" name="objetoColistiones">
   <object id="1" x="-3.90667" y="480.521">
    <polygon points="0,0 419.316,0 489.636,-61.2046 619.859,-62.5068 678.459,-122.409 777.428,-122.409 862.073,-32.5556 958.437,-31.2534 957.135,154.965 5.2089,152.36"/>
@@ -55,5 +32,7 @@
   <object id="3" x="609.441" y="226.587" width="125.014" height="26.0445"/>
   <object id="4" x="770.917" y="226.587" width="188.823" height="26.0445"/>
   <object id="5" x="1145.96" y="338.578"/>
+  <object id="6" x="1134.24" y="681.063"/>
+  <object id="7" x="1097.78" y="205.751"/>
  </objectgroup>
 </map>

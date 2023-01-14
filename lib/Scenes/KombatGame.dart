@@ -1,12 +1,13 @@
 import 'dart:ui';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:juego1/Players/Player1.dart';
 import 'package:flame/game.dart';
 
-class KombatGame extends Forge2DGame {
+class KombatGame extends Forge2DGame with HasKeyboardHandlerComponents {
   late TiledComponent mapComponent;
 
   KombatGame() : super(gravity: Vector2(0, 9.8), zoom: 1);
@@ -15,19 +16,21 @@ class KombatGame extends Forge2DGame {
   Future<void>? onLoad() async {
     // TODO: implement onLoad
     await super.onLoad();
-
+    await images.loadAll([
+      'main_char.png',
+      '01coin.png',
+      'tile1.png',
+    ]);
     mapComponent = await TiledComponent.load('mapa1.tmx', Vector2.all(32));
     add(mapComponent);
-/*
-    final capaObjGroup = mapComponent.tileMap.getLayer<ObjectGroup>('objetos');
+
+    /*   final capaObjGroup = mapComponent.tileMap.getLayer<ObjectGroup>('objetos');
 
     for (final obj in capaObjGroup!.objects) {
       addTiledObjectCollision(obj);
     }*/
-
-    Fighter fighter =
-        Fighter(position: Vector2(size.x / 3, 0), size: size * 0.1);
-    add(fighter);
+    mapComponent.tileMap.getLayer<ObjectGroup>('enemigos');
+    mapComponent.tileMap.getLayer<ObjectGroup>('monedas');
   }
 
   void addTiledObjectCollision(TiledObject tiledObject) {
@@ -78,6 +81,6 @@ class KombatGame extends Forge2DGame {
   @override
   Color backgroundColor() {
     // TODO: implement backgroundColor
-    return const Color.fromRGBO(104, 129, 255, 1.0);
+    return const Color.fromRGBO(189, 255, 253, 1.0);
   }
 }

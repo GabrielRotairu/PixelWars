@@ -1,10 +1,11 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:juego1/Scenes/KombatGame.dart';
+import 'package:juego1/Scenes/PixelWars.dart';
 
 void main() {
-  KombatGame kombatGame = KombatGame();
-  GameWidget gameWidget = GameWidget(game: kombatGame);
+  PixelWars pixelWars= PixelWars();
+  GameWidget gameWidget = GameWidget(game: pixelWars);
 
   runApp(gameWidget);
 }
