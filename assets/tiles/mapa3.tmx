@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="21">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="26">
  <tileset firstgid="1" source="tilesetOpenGame_-_Editada (1).tsx"/>
  <layer id="1" name="Capa de patrones 1" width="30" height="20">
   <data encoding="csv">
@@ -26,17 +26,13 @@
 </data>
  </layer>
  <group id="2" name="objrem">
-  <objectgroup id="5" name="gotas">
-   <object id="17" x="776.174" y="566.195">
+  <objectgroup id="7" name="posIniPlayer2">
+   <object id="23" x="875.539" y="549.321">
     <point/>
    </object>
-   <object id="18" x="871.79" y="430.27">
-    <point/>
-   </object>
-   <object id="19" x="698.369" y="274.661">
-    <point/>
-   </object>
-   <object id="20" x="218.416" y="272.786">
+  </objectgroup>
+  <objectgroup id="6" name="posIniPlayer">
+   <object id="25" x="534.323" y="98.4279">
     <point/>
    </object>
   </objectgroup>
@@ -61,6 +57,7 @@
    </object>
   </objectgroup>
  </group>
+ <objectgroup id="8"/>
  <objectgroup id="3" name="mapcollision">
   <object id="3" x="255.913" y="126.55" width="287.784" height="32.8093"/>
   <object id="4" x="704.931" y="159.359" width="192.169" height="32.8093"/>

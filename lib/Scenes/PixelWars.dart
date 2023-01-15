@@ -3,14 +3,14 @@ import 'package:flame/events.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
-import 'package:juego1/Elements/StarElement.dart';
+import 'package:juego1/Bodies/Suelo.dart';
 import 'package:juego1/Players/GotaPlayer.dart';
 import 'package:juego1/Players/Player1.dart';
 
 class PixelWars extends Forge2DGame with HasKeyboardHandlerComponents {
   late TiledComponent mapComponent;
 
-  PixelWars();
+  PixelWars() : super(gravity: Vector2(0, 9.8), zoom: 1);
 
   @override
   Future<void>? onLoad() async {
@@ -24,28 +24,36 @@ class PixelWars extends Forge2DGame with HasKeyboardHandlerComponents {
     mapComponent = await TiledComponent.load('mapa3.tmx', Vector2.all(32));
     add(mapComponent);
 
-    Fighter player1 = Fighter(position: Vector2(200,0));
-    add(player1);
+    ObjectGroup? estrellas =
+        mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
+    ObjectGroup? gotas =
+        mapComponent.tileMap.getLayer<ObjectGroup>("posIniPlayer2");
+    ObjectGroup? posInicial =
+        mapComponent.tileMap.getLayer<ObjectGroup>("posIniPlayer");
+    ObjectGroup? suelos =
+    mapComponent.tileMap.getLayer<ObjectGroup>("mapcollision");
 
 
-    ObjectGroup?  estrellas = mapComponent.tileMap.getLayer<ObjectGroup>("estrellas");
-    ObjectGroup?  gotas = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
+    for(final suelo in suelos!.objects ){
 
-    for (final estrella in estrellas!.objects){
+      add(Suelo(tiledBody: suelo));
 
-      SpriteComponent estrellaComp = SpriteComponent.fromImage(images.fromCache("star.png"),position: Vector2(estrella.x,estrella.y),anchor: Anchor.bottomCenter);
+    }
+    for (final estrella in estrellas!.objects) {
+      SpriteComponent estrellaComp = SpriteComponent.fromImage(
+          images.fromCache("star.png"),
+          position: Vector2(estrella.x, estrella.y),
+          anchor: Anchor.bottomCenter);
       add(estrellaComp);
-
-
     }
-    for (final gota in gotas!.objects){
-
-      Gota gotaComp = Gota(position: Vector2(gota.x,gota.y));
-      add(gotaComp);
-
-
+    for (final gota in gotas!.objects) {
+      Gota player2 = Gota(position: Vector2(gota.x, gota.y));
+      add(player2);
     }
-
+    Fighter player1 = Fighter(
+        position:
+            Vector2(posInicial!.objects.first.x, posInicial!.objects.first.y));
+    add(player1);
   }
 
   @override

@@ -24,7 +24,10 @@ class Gota extends SpriteAnimationComponent with HasGameRef<PixelWars> {
     );
 
 
-  }
+
+    }
+
+
 
 
 
