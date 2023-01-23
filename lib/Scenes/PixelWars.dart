@@ -7,10 +7,13 @@ import 'package:juego1/Bodies/Suelo.dart';
 import 'package:juego1/Players/GotaPlayer.dart';
 import 'package:juego1/Players/Player1.dart';
 
-class PixelWars extends Forge2DGame with HasKeyboardHandlerComponents {
+class PixelWars extends Forge2DGame
+    with HasKeyboardHandlerComponents, HasCollisionDetection {
   late TiledComponent mapComponent;
+  int verticalDirection = 0;
+  int horizontalDirection = 0;
 
-  PixelWars() : super(gravity: Vector2(0, 9.8), zoom: 1);
+  PixelWars() : super(gravity: Vector2(0, 9.8), zoom: 0.9);
 
   @override
   Future<void>? onLoad() async {
@@ -31,13 +34,10 @@ class PixelWars extends Forge2DGame with HasKeyboardHandlerComponents {
     ObjectGroup? posInicial =
         mapComponent.tileMap.getLayer<ObjectGroup>("posIniPlayer");
     ObjectGroup? suelos =
-    mapComponent.tileMap.getLayer<ObjectGroup>("mapcollision");
+        mapComponent.tileMap.getLayer<ObjectGroup>("mapcollision");
 
-
-    for(final suelo in suelos!.objects ){
-
+    for (final suelo in suelos!.objects) {
       add(Suelo(tiledBody: suelo));
-
     }
     for (final estrella in estrellas!.objects) {
       SpriteComponent estrellaComp = SpriteComponent.fromImage(
@@ -50,10 +50,15 @@ class PixelWars extends Forge2DGame with HasKeyboardHandlerComponents {
       Gota player2 = Gota(position: Vector2(gota.x, gota.y));
       add(player2);
     }
-    Fighter player1 = Fighter(
+    FighterBody player1 = FighterBody(
         position:
             Vector2(posInicial!.objects.first.x, posInicial!.objects.first.y));
     add(player1);
+  }
+
+  void setDirection(int horizontalDirection, int verticalDirection) {
+    this.horizontalDirection = horizontalDirection;
+    this.verticalDirection = verticalDirection;
   }
 
   @override
