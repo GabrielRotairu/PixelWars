@@ -22,7 +22,7 @@ class PixelWars extends Forge2DGame
     await images.loadAll([
       'ember.png',
       'star.png',
-      'water_enemy.png',
+      'water.png',
     ]);
     mapComponent = await TiledComponent.load('mapa3.tmx', Vector2.all(32));
     add(mapComponent);
@@ -46,10 +46,10 @@ class PixelWars extends Forge2DGame
           anchor: Anchor.bottomCenter);
       add(estrellaComp);
     }
-    for (final gota in gotas!.objects) {
-      Gota player2 = Gota(position: Vector2(gota.x, gota.y));
+
+      GotaBody player2 = GotaBody(position: Vector2(gotas!.objects.first.x, gotas!.objects.first.y));
       add(player2);
-    }
+
     FighterBody player1 = FighterBody(
         position:
             Vector2(posInicial!.objects.first.x, posInicial!.objects.first.y));

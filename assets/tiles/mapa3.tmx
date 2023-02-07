@@ -27,7 +27,7 @@
  </layer>
  <group id="2" name="objrem">
   <objectgroup id="7" name="posIniPlayer2">
-   <object id="23" x="875.539" y="549.321">
+   <object id="23" x="835.539" y="550.321">
     <point/>
    </object>
   </objectgroup>
