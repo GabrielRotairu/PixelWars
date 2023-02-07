@@ -1,9 +1,9 @@
 import 'package:flame/components.dart';
-import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:forge2d/src/dynamics/body.dart';
+import 'package:juego1/Players/Player1.dart';
 import 'package:juego1/Scenes/PixelWars.dart';
 
 class Gota extends SpriteAnimationComponent with HasGameRef<PixelWars> {
@@ -23,15 +23,17 @@ class Gota extends SpriteAnimationComponent with HasGameRef<PixelWars> {
   }
 }
 
-class GotaBody extends BodyComponent<PixelWars> with KeyboardHandler {
+class GotaBody extends BodyComponent<PixelWars> with KeyboardHandler,ContactCallbacks {
   Vector2 position;
   Vector2 size = Vector2(64, 64);
   int verticalDirection = 0;
   int horizontalDirection = 0;
-  double jumpSpeed = 0;
   final Vector2 velocity = Vector2.zero();
   final double moveSpeed = 200;
-  late Gota emberPlayer;
+  late Gota waterPlayer;
+  bool isContact=false;
+  final shape=CircleShape();
+
 
   GotaBody({required this.position});
 
@@ -39,18 +41,17 @@ class GotaBody extends BodyComponent<PixelWars> with KeyboardHandler {
   Future<void> onLoad() async {
     // TODO: implement onLoad
     await super.onLoad();
-    emberPlayer = Gota(position: Vector2.zero());
-    emberPlayer.size = size;
-    add(emberPlayer);
+    waterPlayer = Gota(position: Vector2.zero());
+    waterPlayer.size = size;
+    add(waterPlayer);
     renderBody = true;
   }
 
   @override
   Body createBody() {
     // TODO: implement createBody
-    BodyDef definicionCuerpo =
-    BodyDef(position: position, type: BodyType.dynamic);
-    Body cuerpo = world.createBody(definicionCuerpo);
+    BodyDef bodyDef = BodyDef(type: BodyType.dynamic, position: position,);
+    Body cuerpo = world.createBody(bodyDef);
 
     final shape = CircleShape();
     shape.radius = size.x / 2;
@@ -60,18 +61,30 @@ class GotaBody extends BodyComponent<PixelWars> with KeyboardHandler {
 
     return cuerpo;
   }
+  void move() async{
+    isContact=true;
+    if(isContact){
+      waterPlayer.size=size/2;
+      await Future.delayed(Duration(seconds: 3));
+      isContact=false;
+      // print("han pasado 5 segundos"+ isContact.toString());
+      waterPlayer.size=size;
+    }
+  }
 
-/*
+
+
+
   @override
-  void onMount() {
-    super.onMount();
-    camera.followBodyComponent(this);
-  }*/
+  void beginContact(Object other, Contact contact) {
+    if (other is FighterBody) {
+      hit();
+      print("hoooola");
+    }
+  }
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    print("DEBUG: ----------->>>>>>>> BOTON PRESIONADO: " +
-        keysPressed.toString());
 
     horizontalDirection = 0;
     verticalDirection = 0;
@@ -92,24 +105,32 @@ class GotaBody extends BodyComponent<PixelWars> with KeyboardHandler {
 
     return true;
   }
-
+  void hit() {
+    isContact = true;
+  }
   @override
   void update(double dt) {
     // TODO: implement update
 
     velocity.x = horizontalDirection * moveSpeed;
     velocity.y = verticalDirection * moveSpeed;
-    velocity.y += -1 * jumpSpeed;
 
     center.add((velocity * dt));
-    if (horizontalDirection < 0 && emberPlayer.scale.x > 0) {
+    if (horizontalDirection < 0 && waterPlayer.scale.x > 0) {
       //flipAxisDirection(AxisDirection.left);
       //flipAxis(Axis.horizontal);
-      emberPlayer.flipHorizontallyAroundCenter();
-    } else if (horizontalDirection > 0 && emberPlayer.scale.x < 0) {
+      waterPlayer.flipHorizontallyAroundCenter();
+    } else if (horizontalDirection > 0 && waterPlayer.scale.x < 0) {
       //flipAxisDirection(AxisDirection.left);
-      emberPlayer.flipHorizontallyAroundCenter();
+      waterPlayer.flipHorizontallyAroundCenter();
     }
+    if (isContact) {
+      world.destroyBody(body);
+      gameRef.remove(this);
+      print("hoola");
+
+  }
+
     super.update(dt);
   }
 }

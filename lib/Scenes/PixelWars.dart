@@ -7,9 +7,13 @@ import 'package:juego1/Bodies/Suelo.dart';
 import 'package:juego1/Players/GotaPlayer.dart';
 import 'package:juego1/Players/Player1.dart';
 
+import '../Elements/StarElement.dart';
+
 class PixelWars extends Forge2DGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
+  int lifes=3;
   late TiledComponent mapComponent;
+  late SpriteAnimation EstrellasElement;
   int verticalDirection = 0;
   int horizontalDirection = 0;
 
@@ -39,13 +43,9 @@ class PixelWars extends Forge2DGame
     for (final suelo in suelos!.objects) {
       add(Suelo(tiledBody: suelo));
     }
-    for (final estrella in estrellas!.objects) {
-      SpriteComponent estrellaComp = SpriteComponent.fromImage(
-          images.fromCache("star.png"),
-          position: Vector2(estrella.x, estrella.y),
-          anchor: Anchor.bottomCenter);
-      add(estrellaComp);
-    }
+    for (final estrella in estrellas!.objects){
+      StarElement estrellasElement= StarElement(position: Vector2(estrella.x,estrella.y));
+      add(estrellasElement);}
 
       GotaBody player2 = GotaBody(position: Vector2(gotas!.objects.first.x, gotas!.objects.first.y));
       add(player2);

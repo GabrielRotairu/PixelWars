@@ -9,7 +9,7 @@ import 'package:juego1/Scenes/PixelWars.dart';
 class Fighter extends SpriteAnimationComponent with HasGameRef<PixelWars> {
   Fighter({required super.position})
       : super(size: Vector2.all(64), anchor: Anchor.center);
-
+  bool hitByEnemy = false;
   @override
   Future<void> onLoad() async {
     animation = SpriteAnimation.fromFrameData(
@@ -23,7 +23,7 @@ class Fighter extends SpriteAnimationComponent with HasGameRef<PixelWars> {
   }
 }
 
-class FighterBody extends BodyComponent<PixelWars> with KeyboardHandler {
+class FighterBody extends BodyComponent<PixelWars> with KeyboardHandler,ContactCallbacks {
   Vector2 position;
   Vector2 size = Vector2(64, 64);
   int verticalDirection = 0;
@@ -32,6 +32,7 @@ class FighterBody extends BodyComponent<PixelWars> with KeyboardHandler {
   final Vector2 velocity = Vector2.zero();
   final double moveSpeed = 200;
   late Fighter emberPlayer;
+  bool hitByEnemy = false;
 
   FighterBody({required this.position});
 
@@ -48,8 +49,8 @@ class FighterBody extends BodyComponent<PixelWars> with KeyboardHandler {
   @override
   Body createBody() {
     // TODO: implement createBody
-    BodyDef definicionCuerpo =
-        BodyDef(position: position, type: BodyType.dynamic);
+    BodyDef definicionCuerpo= BodyDef(position: position,type: BodyType.dynamic,
+      userData: this,);
     Body cuerpo = world.createBody(definicionCuerpo);
 
     final shape = CircleShape();
@@ -70,8 +71,7 @@ class FighterBody extends BodyComponent<PixelWars> with KeyboardHandler {
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    print("DEBUG: ----------->>>>>>>> BOTON PRESIONADO: " +
-        keysPressed.toString());
+
 
     horizontalDirection = 0;
     verticalDirection = 0;
