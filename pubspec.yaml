@@ -40,7 +40,6 @@ flutter:
      - assets/
      - assets/images/
      - assets/tiles/
-     - assets/images/tilesets/
 
 
 flutter_icons:

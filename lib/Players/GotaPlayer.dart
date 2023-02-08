@@ -81,6 +81,10 @@ class GotaBody extends BodyComponent<PixelWars> with KeyboardHandler,ContactCall
       hit();
       print("hoooola");
     }
+    if (game.lifesP1 <= 0|| game.lifesP2 <= 0) {
+      world.destroyBody(body);
+      gameRef.remove(this);
+    }
   }
 
   @override
@@ -117,11 +121,8 @@ class GotaBody extends BodyComponent<PixelWars> with KeyboardHandler,ContactCall
 
     center.add((velocity * dt));
     if (horizontalDirection < 0 && waterPlayer.scale.x > 0) {
-      //flipAxisDirection(AxisDirection.left);
-      //flipAxis(Axis.horizontal);
       waterPlayer.flipHorizontallyAroundCenter();
     } else if (horizontalDirection > 0 && waterPlayer.scale.x < 0) {
-      //flipAxisDirection(AxisDirection.left);
       waterPlayer.flipHorizontallyAroundCenter();
     }
     if (isContact) {
