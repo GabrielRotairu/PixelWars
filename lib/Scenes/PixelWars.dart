@@ -4,10 +4,12 @@ import 'package:flame/extensions.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:juego1/Bodies/Suelo.dart';
+import 'package:juego1/Elements/estrellas.dart';
 import 'package:juego1/Players/GotaPlayer.dart';
 import 'package:juego1/Players/Player1.dart';
 
-import '../Elements/StarElement.dart';
+import '../Elements/estrellas.dart';
+import '../Elements/estrellas.dart';
 
 class PixelWars extends Forge2DGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
@@ -44,8 +46,10 @@ class PixelWars extends Forge2DGame
       add(Suelo(tiledBody: suelo));
     }
     for (final estrella in estrellas!.objects){
-      StarElement estrellasElement= StarElement(position: Vector2(estrella.x,estrella.y));
-      add(estrellasElement);}
+      EstrellasBody estrellasElement= EstrellasBody(position: Vector2(estrella.x,estrella.y));
+      add(estrellasElement);
+
+    }
 
       GotaBody player2 = GotaBody(position: Vector2(gotas!.objects.first.x, gotas!.objects.first.y));
       add(player2);
